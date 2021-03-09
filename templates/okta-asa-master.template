@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: LinuxBastion+VPC Jul,30,2020 (qs-1qup6ra9p) (Please do not remove)
+Description: This CloudFormation template deploys an environment – VPC, Bastion, and Target hosts – with Okta Advanced Server Access
 Metadata:
   LICENSE: Apache License, Version 2.0 
   'AWS::CloudFormation::Interface':
@@ -279,7 +279,7 @@ Resources:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/asa-aws-bastion.template
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/okta-asa-bastion.template
         - S3Bucket: !If
             - UsingDefaultBucket
             - !Sub 'quickstart-okta-asa-${AWS::Region}'
@@ -318,7 +318,7 @@ Resources:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/asa-aws-target.template
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/okta-asa-target.template
         - S3Bucket: !If
             - UsingDefaultBucket
             - !Sub 'quickstart-okta-asa-${AWS::Region}'

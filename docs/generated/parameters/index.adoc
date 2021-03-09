@@ -1,6 +1,6 @@
 
 === Launch into a new VPC
-include::asa-aws-master.template.adoc[]
+include::okta-asa-master.template.adoc[]
 
 === Launch into an existing VPC
-include::asa-aws-bastion.template.adoc[]
+include::okta-asa-bastion.template.adoc[]

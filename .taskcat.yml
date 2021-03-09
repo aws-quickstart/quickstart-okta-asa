@@ -9,7 +9,7 @@ project:
   - us-east-2
   - us-west-1
   - us-west-2
-  template: templates/asa-aws-master.template
+  template: templates/okta-asa-master.template
   parameters:
     AvailabilityZones: $[taskcat_getaz_2]
     EC2InstanceType: t2.micro

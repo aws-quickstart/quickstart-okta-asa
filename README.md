@@ -24,8 +24,8 @@ Deployment instructions:
 
 - Sign up for an [AWS account](https://aws.amazon.com), select a region, and create a key pair for the bastion and target instances.
 - In the AWS CloudFormation console, launch one of the following templates to build a new stack:
-  - /templates/asa-aws-master.template (to deploy bastion and target hosts with Okta ASA into a new VPC)
-  - /templates/asa-aws-bastion.template (to deploy bastion hosts with Okta ASA into your existing VPC)
+  - /templates/okta-asa-master.template (to deploy bastion and target hosts with Okta ASA into a new VPC)
+  - /templates/okta-asa-bastion.template (to deploy bastion hosts with Okta ASA into your existing VPC)
 - In the AWS CloudFormation console, Choose the parameters, and paste the Enrollment Token for the Advanced Server Access project you wish to enroll the instances with
 - When deployed, confirm that the instances were properly enrolled by visiting the Advanced Server Access dashboard
 - Use the CLI to login to the newly deployed target instance via the bastion by running `sft ssh <target-instance>`
