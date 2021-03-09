@@ -1,0 +1,9 @@
+:quickstart-project-name: quickstart-okta-asa
+:partner-product-name: Okta Advanced Server Access
+:partner-company-name: Okta
+:doc-month: January
+:doc-year: 2021
+:partner-contributors: Ivan Dwyer, Frederico Hakamine, and Adam Arkom
+:quickstart-contributors: 
+:deployment_time: 30 minutes / 1 hour
+:default_deployment_region: us-east-1

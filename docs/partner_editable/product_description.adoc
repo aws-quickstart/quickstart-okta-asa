@@ -1,0 +1,5 @@
+// Replace the content in <>
+// Briefly describe the software. Use consistent and clear branding. 
+// Include the benefits of using the software on AWS, and provide details on usage scenarios.
+
+Advanced Server Access provides an elegant mechanism to manage the lifecycle of local EC2 instance user & group accounts, and their respective machine-level permissions directly sourced from the https://www.okta.com/products/[Okta Identity Cloud]. SSH & RDP access to Linux & Windows EC2 instances is authenticated and authorized through an Okta Single Sign-On workflow, with additional contextual Multifactor Authentication capabilities.

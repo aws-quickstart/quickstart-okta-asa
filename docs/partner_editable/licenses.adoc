@@ -1,0 +1,5 @@
+// Include details about the license and how they can sign up. If no license is required, clarify that. 
+
+This Quick Start requires a license for https://www.okta.com/products/advanced-server-access/[{partner-product-name}], which backed by the Okta Identity Cloud for user & group management, account lifecycle management, Single Sign-On, and Multifactor Authentication. 
+
+To use the Quick Start in your production environment, sign up for Okta Advanced Server Access at: https://app.scaleft.com/p/signup. Follow the Getting Started instructions to create a new Advanced Server Access tenant backed by a new or existing Okta tenant. There is no license file required to deploy the software on the AWS Cloud.
