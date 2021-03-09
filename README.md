@@ -16,7 +16,7 @@ Deployment instructions:
 
 - Sign up for Okta Advanced Server Access [here](https://app.scaleft.com/p/signup)
 - Follow the workflow to integrate with your Okta Org
-- Download the Client Application at https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/setup/enrolling-a-client.htm
+- Download the [ASA Client Application](https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/setup/enrolling-a-client.htm)
 - Create a Project and assign a Group that includes users you wish to grant access
 - Generate an Enrollment Token (copy this value, you will use it in the CloudFormation template)
 
