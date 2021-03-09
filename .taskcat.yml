@@ -1,0 +1,53 @@
+project:
+  name: quickstart-okta-asa
+  owner: quickstart-eng@amazon.com
+  lambda_source_path: functions/source
+  lambda_zip_path: packages
+  s3_regional_buckets: true
+  regions:
+  - us-east-1
+  - us-east-2
+  - us-west-1
+  - us-west-2
+  template: templates/asa-aws-master.template
+  parameters:
+    AvailabilityZones: $[taskcat_getaz_2]
+    EC2InstanceType: t2.micro
+    KeyPairName: $[taskcat_getkeypair]
+    PrivateSubnet1CIDR: 10.0.0.0/19
+    PrivateSubnet2CIDR: 10.0.32.0/19
+    PublicSubnet1CIDR: 10.0.128.0/20
+    PublicSubnet2CIDR: 10.0.144.0/20
+    QSS3BucketName: $[taskcat_autobucket]
+    RemoteAccessCIDR: 10.0.0.0/16
+    VPCCIDR: 10.0.0.0/16
+    QSS3BucketRegion: $[taskcat_current_region]
+tests:
+  amazon:
+    parameters:
+      EC2AMIOS: Amazon-Linux2-HVM
+      BastionHostName: bastion-amazon
+      TargetHostName: target-amazon
+    regions:
+      - us-east-1
+  centos:
+    parameters:
+      EC2AMIOS: CentOS-7-HVM
+      BastionHostName: bastion-centos
+      TargetHostName: target-centos
+    regions:
+      - us-west-1
+  sles:
+    parameters:
+      EC2AMIOS: SUSE-SLES-15-HVM
+      BastionHostName: bastion-suse
+      TargetHostName: target-suse
+    regions:
+      - us-east-2
+  ubuntu:
+    parameters:
+      EC2AMIOS: Ubuntu-Server-20.04-LTS-HVM
+      BastionHostName: bastion-ubuntu
+      TargetHostName: target-ubuntu
+    regions:
+      - us-west-2
