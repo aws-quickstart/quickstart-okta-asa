@@ -1,0 +1,58 @@
+
+.Network configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|VPC ID
+(`VPCID`)|`**__Requires input__**`|ID of the VPC (e.g., vpc-0343606e).|Public subnet 1 ID
+(`PublicSubnet1ID`)|`**__Requires input__**`|ID of the public subnet 1 that you want to provision the first target into (e.g., subnet-a0246dcd).|Public subnet 2 ID
+(`PublicSubnet2ID`)|`**__Requires input__**`|ID of the public subnet 2 that you want to provision the second target into (e.g., subnet-e3246d8e).|Private Subnet 2 ID
+(`PrivateSubnet2ID`)|`**__Requires input__**`|ID of the private subnet 2 in Availability Zone 2 (e.g., subnet-a0246dcd)|Private Subnet 1 ID
+(`PrivateSubnet1ID`)|`**__Requires input__**`|ID of the private subnet 1 in Availability Zone 1 (e.g., subnet-a0246dcd)|Allowed target external access CIDR
+(`RemoteAccessCIDR`)|`**__Requires input__**`|Allowed CIDR block for external SSH access to the targets.
+|===
+.Amazon EC2 configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Key pair name
+(`KeyPairName`)|`**__Requires input__**`|Name of an existing public/private key pair. If you do not have one in this AWS Region, please create it before continuing.|AMI operating system
+(`EC2AMIOS`)|`Amazon-Linux2-HVM`|The Linux distribution for the AMI to be used for the target instances.|Target instance type
+(`EC2InstanceType`)|`t2.micro`|Amazon EC2 instance type for the target instances.|Root volume size
+(`RootVolumeSize`)|`10`|The size in GB for the root EBS volume.|Bastion Security Group ID
+(`BastionSecurityGroupID`)|`**__Requires input__**`|ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910)
+|===
+.Linux target configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Number of target hosts
+(`NumEC2Hosts`)|`1`|The number of target hosts to create. The maximum number is four.|Bastion Host Name
+(`BastionHostName`)|`**__Requires input__**`|The value used for the name tag of the bastion host|Target Host Name
+(`TargetHostName`)|`LinuxTarget`|The value used for the name tag of the target host|Target tenancy
+(`EC2Tenancy`)|`default`|VPC tenancy to launch the target in. Options: 'dedicated' or 'default'|Enable banner
+(`EnableBanner`)|`false`|To include a banner to be displayed when connecting via SSH to the target, choose true.|Banner text
+(`EC2Banner`)|`**__Blank string__**`|Banner text to display upon login.|TCP forwarding
+(`EnableTCPForwarding`)|`true`|To enable TCP forwarding, choose true.|X11 forwarding
+(`EnableX11Forwarding`)|`true`|To enable X11 forwarding, choose true.
+|===
+.Alternative configurations
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Alternative initialization script
+(`AlternativeInitializationScript`)|`**__Blank string__**`|An alternative initialization script to run during setup.|Operating system override
+(`OSImageOverride`)|`**__Blank string__**`|The Region-specific image to use for the instance.|Alternative IAM role
+(`AlternativeIAMRole`)|`**__Blank string__**`|An existing IAM Role name to attach to the target. If left blank, a new role will be created.|Environment variables
+(`EnvironmentVariables`)|`**__Blank string__**`|A comma-separated list of environment variables for use in bootstrapping. Variables must be in the format KEY=VALUE. VALUE cannot contain commas.
+|===
+.AWS Quick Start configuration
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Quick Start S3 bucket name
+(`QSS3BucketName`)|`quickstart-okta-asa`|S3 bucket name for the Quick Start assets. Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).|Quick Start S3 key prefix
+(`QSS3KeyPrefix`)|`quickstart-okta-asa/`|S3 key prefix for the Quick Start assets. Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), dots (.) and forward slash (/) and it should end with a forward slash (/).|Quick Start S3 bucket region
+(`QSS3BucketRegion`)|`us-east-1`|The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value.
+|===
+.Okta Advanced Server Access Parameters
+[width="100%",cols="16%,11%,73%",options="header",]
+|===
+|Parameter label (name) |Default value|Description|Okta Advanced Server Access Enrollment Token
+(`EnrollmentToken`)|`**__Requires input__**`|Okta Advanced Server Access Enrollment Token
+|===

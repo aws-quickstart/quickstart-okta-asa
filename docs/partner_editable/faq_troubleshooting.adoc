@@ -14,13 +14,13 @@ For additional information, see https://docs.aws.amazon.com/AWSCloudFormation/la
 
 *A.* We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see the http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html[AWS documentation^].
 
-*Q.* The EC2 instances deployed in the stack do not show up in my Okta Advanced Server Access Dashboard
+//*Q.* The EC2 instances deployed in the stack do not show up in my Okta Advanced Server Access Dashboard
 
-*A.* TODO
+//*A.* TODO
 
-*Q.* I am unable to SSH into the deployed EC2 instances
+//*Q.* I am unable to SSH into the deployed EC2 instances
 
-*A.* TODO
+//*A.* TODO
 
 == Additional Resources
 

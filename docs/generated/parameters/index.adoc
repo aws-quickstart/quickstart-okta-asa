@@ -1,6 +1,6 @@
 
 === Launch into a new VPC
-include::okta-asa-master.template.adoc[]
+include::okta-asa-main.adoc[]
 
 === Launch into an existing VPC
-include::okta-asa-bastion.template.adoc[]
+include::okta-asa-target.adoc[]

@@ -10,7 +10,7 @@ Sign in to your Okta Advanced Server Access Team at https://app.scaleft.com with
 Create a new Advanced Server Access Project, which represents the authorization scope for a set of EC2 instances. Users and Groups are explicitly assigned to Projects, where role-based access and entitlements are specified. Okta manages and provisions accounts and entitlements to the downstream EC2 instances.
 
 :xrefstyle: short
-[#architecture1]
+[#deploy1]
 .Creating a project in {partner-product-name}
 [link=images/asa_create_project.png]
 image::../images/asa_create_project.png[Creating Project in Okta Advanced Server Access,width=648,height=439]

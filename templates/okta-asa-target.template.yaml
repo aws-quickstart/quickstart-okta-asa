@@ -1,18 +1,18 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: This CloudFormation template deploys a target host enrolled with Okta Advanced Server Access
+Description: This CloudFormation template deploys a target host enrolled with Okta Advanced Server Access (qs-1rm280cl7)
 Metadata:
   LICENSE: Apache License, Version 2.0
-  'AWS::CloudFormation::Interface':
+  QuickStartDocumentation:
+    EntrypointName: "Launch an ASA target into an existing VPC"
+    Order: "3"
+  AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
           default: Network configuration
         Parameters:
           - VPCID
-          - PublicSubnet1ID
-          - PublicSubnet2ID
           - PrivateSubnet2ID
           - PrivateSubnet1ID
-          - RemoteAccessCIDR
       - Label:
           default: Amazon EC2 configuration
         Parameters:
@@ -84,10 +84,6 @@ Metadata:
         default: Number of target hosts
       OSImageOverride:
         default: Operating system override
-      PublicSubnet1ID:
-        default: Public subnet 1 ID
-      PublicSubnet2ID:
-        default: Public subnet 2 ID
       PrivateSubnet1ID:
         default: Private Subnet 1 ID
       PrivateSubnet2ID:
@@ -96,8 +92,6 @@ Metadata:
         default: Quick Start S3 bucket name
       QSS3KeyPrefix:
         default: Quick Start S3 key prefix
-      RemoteAccessCIDR:
-        default: Allowed target external access CIDR
       VPCID:
         default: VPC ID
       RootVolumeSize:
@@ -190,14 +184,6 @@ Parameters:
     Default: '1'
     Description: The number of target hosts to create. The maximum number is four.
     Type: String
-  PublicSubnet1ID:
-    Description: ID of the public subnet 1 that you want to provision the first target
-      into (e.g., subnet-a0246dcd).
-    Type: 'AWS::EC2::Subnet::Id'
-  PublicSubnet2ID:
-    Description: ID of the public subnet 2 that you want to provision the second target into
-      (e.g., subnet-e3246d8e).
-    Type: 'AWS::EC2::Subnet::Id'
   PrivateSubnet1ID:
     Description: ID of the private subnet 1 in Availability Zone 1 (e.g., subnet-a0246dcd)
     Type: AWS::EC2::Subnet::Id
@@ -208,14 +194,18 @@ Parameters:
     AllowedPattern: '^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$'
     ConstraintDescription: Quick Start bucket name can include numbers, lowercase letters, uppercase
       letters, and hyphens (-). It cannot start or end with a hyphen (-).
-    Default: quickstart-okta-asa
+    Default: aws-quickstart
     Description: S3 bucket name for the Quick Start assets. Quick Start bucket name can
       include numbers, lowercase letters, uppercase letters, and hyphens (-). It
       cannot start or end with a hyphen (-).
     Type: String
   QSS3BucketRegion:
     Default: 'us-east-1'
-    Description: The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. When using your own bucket, you must specify this value.
+    Description: 'AWS Region where the Quick Start S3 bucket (QSS3BucketName) is 
+    hosted. Keep the default Region unless you are customizing the template. 
+    Changing this Region updates code references to point to a new Quick Start location. 
+    When using your own bucket, specify the Region. 
+    See https://aws-quickstart.github.io/option1.html.'
     Type: String
   QSS3KeyPrefix:
     AllowedPattern: '^([0-9a-zA-Z-.]+/)*$'
@@ -226,11 +216,6 @@ Parameters:
     Description: S3 key prefix for the Quick Start assets. Quick Start key prefix can
       include numbers, lowercase letters, uppercase letters, hyphens (-), dots
       (.) and forward slash (/) and it should end with a forward slash (/).
-    Type: String
-  RemoteAccessCIDR:
-    AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
-    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/x
-    Description: Allowed CIDR block for external SSH access to the targets.
     Type: String
   VPCID:
     Description: 'ID of the VPC (e.g., vpc-0343606e).'
@@ -263,6 +248,8 @@ Parameters:
   EnrollmentToken:
     Type: String
     Description: Okta Advanced Server Access Enrollment Token
+    MinLength: 24
+    ConstraintDescription: Must contain a valid ASA enrollment token
 Rules:
   SubnetsInVPC:
     Assertions:
@@ -417,9 +404,7 @@ Conditions:
     - !Equals
       - !Ref OSImageOverride
       - ''
-  UsingDefaultBucket: !Equals
-    - !Ref QSS3BucketName
-    - 'quickstart-okta-asa'
+  UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
   DefaultBanner: !Equals [!Ref EC2Banner, ""]
 Resources:
   TargetMainLogGroup:
@@ -534,16 +519,11 @@ Resources:
         config:
           files:
             /tmp/install_asa_target.sh:
-              source: !Sub
-                - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}scripts/install_asa_target.sh
-                - S3Bucket: !If
-                    - UsingDefaultBucket
-                    - !Sub 'quickstart-okta-asa-${AWS::Region}'
-                    - !Ref 'QSS3BucketName'
-                  S3Region: !If
-                    - UsingDefaultBucket
-                    - !Ref 'AWS::Region'
-                    - !Ref 'QSS3BucketRegion'
+              source:
+                !Sub
+                  - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}scripts/install_asa_target.sh
+                  - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+                    S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
               mode: '000550'
               owner: root
               group: root
@@ -556,16 +536,11 @@ Resources:
                 -a exit,always -F arch=b64 -S execve
                 -a exit,always -F arch=b32 -S execve
             /tmp/auditing_configure.sh:
-              source: !Sub
-                - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}scripts/auditing_configure.sh
-                - S3Bucket: !If
-                    - UsingDefaultBucket
-                    - !Sub 'quickstart-okta-asa-${AWS::Region}'
-                    - !Ref 'QSS3BucketName'
-                  S3Region: !If
-                    - UsingDefaultBucket
-                    - !Ref 'AWS::Region'
-                    - !Ref 'QSS3BucketRegion'
+              source:
+                !Sub
+                  - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}scripts/auditing_configure.sh
+                  - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+                    S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
               mode: '000550'
               owner: root
               group: root
@@ -576,14 +551,8 @@ Resources:
                 - !Ref AlternativeInitializationScript
                 - !Sub
                   - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}scripts/target_bootstrap.sh
-                  - S3Bucket: !If
-                      - UsingDefaultBucket
-                      - !Sub 'quickstart-okta-asa-${AWS::Region}'
-                      - !Ref 'QSS3BucketName'
-                    S3Region: !If
-                      - UsingDefaultBucket
-                      - !Ref 'AWS::Region'
-                      - !Ref 'QSS3BucketRegion'
+                  - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+                    S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
               mode: '000550'
               owner: root
               group: root
@@ -609,7 +578,7 @@ Resources:
                   - DefaultBanner
                   - !Sub
                     - s3://${S3Bucket}/${QSS3KeyPrefix}scripts/banner_message.txt
-                    - S3Bucket: !If [ UsingDefaultBucket, !Sub 'quickstart-okta-asa-${AWS::Region}', !Ref 'QSS3BucketName' ]
+                    - S3Bucket: !If [ UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref 'QSS3BucketName' ]
                   - !Ref EC2Banner
             c-install_asa:
               cwd: '/tmp/'

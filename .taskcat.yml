@@ -9,10 +9,11 @@ project:
   - us-east-2
   - us-west-1
   - us-west-2
-  template: templates/okta-asa-master.template
+  template: templates/okta-asa-main.template.yaml
   parameters:
     AvailabilityZones: $[taskcat_getaz_2]
     EC2InstanceType: t2.micro
+    EnrollmentToken: override
     KeyPairName: $[taskcat_getkeypair]
     PrivateSubnet1CIDR: 10.0.0.0/19
     PrivateSubnet2CIDR: 10.0.32.0/19
