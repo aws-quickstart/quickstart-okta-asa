@@ -39,8 +39,6 @@ When you create a new ASA Project, you determine a starting point for UID and GI
 
 Before installing the Server Agent on servers with existing user accounts, we recommend performing a brief discovery exercise that outputs the existing accounts with their respective attributes such as uid and gid. Another benefit of this exercise is to inventory the existing credentials on the server, which using ASA will enable you to eliminate.
 
-//TODO Dave, Many people won't read a section of paragraph text this long, especially at the end of the doc. (1) Which of this info, if any, could we move up to the product description? (2) Is this nice-to-know stuff, or are people supposed to take actions here? If action, please convert the actions into steps with subheads to identify the tasks we're accomplishing.
-
 == Security: Client certificate authentication
 
 A key outcome of leveraging Okta Advanced Server Access as your authentication mechanism to EC2 instances is no longer relying on static credentials to login. This greatly mitigates the risk of credential theft and misuse, and eliminates the need to wrap additional controls and management layers around secrets. With Okta, the credentials used to authenticate are ephemeral in the nature and use.
@@ -57,4 +55,4 @@ The CA mints the client certificate and sends to the Client Application, which u
 
 The attack surface is then limited to a full machine takeover, with a strongly authenticated Okta session bound to the Client, where the Client was still enrolled with the Team. In this case, the user could still be authenticated and authorized to receive freshly minted certificates for additional servers. Upon expiration of the Okta session, or if the Client is revoked or unenrolled, that attack surface is closed.
 
-//TODO Dave, Same as above... Many people won't read a section of paragraph text this long, especially at the end of the doc. (1) Which of this info, if any, could we move up to the product description in the product description? (2) Is this nice-to-know stuff, or are people supposed to take actions here? If action, please convert the actions into steps with subheads to identify the tasks we're accomplishing.
+//TODO Dave, For all the above, might it make sense to move some of this up to the product description? Might some of it lend itself to writing out as steps to identify actionable information?

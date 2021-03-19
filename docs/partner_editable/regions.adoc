@@ -26,7 +26,7 @@
 |sa-east-1	|South America (São Paulo)
 |===
 
-**Amazon Linux, Centos and SUSE:**
+**Amazon Linux, Centos, and SUSE:**
 
 [cols=2*,options="header"]
 |===
@@ -37,7 +37,7 @@
 |cn-northwest-1  |China (Ningxia)
 |===
 
-**Amazon Linux, Centos and Ubuntu:**
+**Amazon Linux, Centos, and Ubuntu:**
 
 [cols=2*,options="header"]
 |===
@@ -47,7 +47,7 @@
 |af-south-1	|Africa (Cape Town)
 |===
 
-**Amazon Linux and SUSE:**
+**Amazon Linux, and SUSE:**
 
 [cols=2*,options="header"]
 |===
