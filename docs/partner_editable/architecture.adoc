@@ -3,7 +3,6 @@ Deploying this Quick Start for a new virtual private cloud (VPC) with default pa
 :xrefstyle: short
 [#architecture1]
 .Quick Start architecture for _{partner-product-name}_ on AWS
-[link=images/okta-asa-architecture_diagram.png]
 image::../images/okta-asa-architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start deploys the following:
