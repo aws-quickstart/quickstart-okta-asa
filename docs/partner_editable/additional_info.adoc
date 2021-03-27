@@ -42,9 +42,9 @@ When you create a new ASA project, you determine a starting point for user ID (U
 
 Before installing the server agent on servers with existing user accounts, perform a brief discovery exercise that outputs the existing accounts with their respective attributes, such as UID and GID. As an added benefit, this exercise inventories the existing credentials on the server, which you can eliminate by using {partner-product-short-name}.
 
-//TODO Dave, I revised the previous sentence as far as I could for clarity, but I still don't get what, exactly, we can eliminate.
+//TODO Dave, I revised the previous sentence as far as I could for clarity, but I still don't get what, exactly, we can "eliminate by using ASA.""
 
-//TODO Dave, Would any of this lend itself to rewriting as step-by-step instructions (such as "perform a brief discovery exercise...")? Or might any of this info belong tucked into our existing step-by-step instructions to make sure that people take these actions at the right time? 
+//TODO Dave, Would any of this section lend itself to rewriting as step-by-step instructions (such as "perform a brief discovery exercise...")? Or might any of this info belong tucked into our existing step-by-step instructions to make sure that people take these actions at the right time (such as "Before installing the server agent on servers with existing user accounts...")? 
 
 == Security: Client-certificate authentication
 
@@ -52,7 +52,7 @@ Each Advanced Server Access project is associated with its own programmable cert
 
 Each time a customer creates a project within a team, a new CA is spun up. The private key that backs the project CA is stored in AWS Key Management Service (AWS KMS), and an internal security policy is associated with it. This policy is subject to compliance, and our procedures meet requirements.
 
-//TODO Dave, What does it mean to say (above) "This policy is subject to compliance, and our procedures meet requirements"? We have to be extra careful about compliance-related statements.
+//TODO Dave, What does it mean to say (above), "This policy is subject to compliance, and our procedures meet requirements"? We have to be extra careful about compliance-related statements.
 
 //TODO Dave, Given what we say about AWS KMS in the prev. paragraph, any chance it makes sense to show it in the architecture diagram? If so, please revise the image and the bulleted list.
 

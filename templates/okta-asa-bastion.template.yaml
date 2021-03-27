@@ -767,5 +767,5 @@ Outputs:
     Description: To test your deployment, see the procedure in the deployment guide.
     Value: <Permalink to deployment guide>
     # TODO Marcia to add permalink when it's ready.
-    # TODO Dave, Since the other two templates don't have "Outputs" sections, I added this Postdeployment output here only. Let me know if I need to do anything differently. 
+    # TODO Dave, Since the other two templates don't have "Outputs" sections, I added this Postdeployment output in this template only. Let me know if I need to do anything differently. 
     
