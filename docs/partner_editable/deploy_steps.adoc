@@ -59,6 +59,8 @@ Each deployment takes about {deployment_time} to complete.
 ^|link:=../../templates/okta-asa-bastion.template[View template^]
 |===
 //TODO Dave, For existing-VPC option, we deploy just one template, right (okta-asa-bastion.template.yaml)? I'm guessing, though, that we need to give people two "view template" links for that option: one to view okta-asa-bastion.template.yaml and one to view okta-asa-target.template.yaml (since each file has its own parameter table). Is that right? If so, would a note of explanation be helpful as to why we have two "launch" templates for this one deployment option?
+
+//TODO Marcia to add permalinks.
 +
 . Check the AWS Region that's displayed in the upper-right corner of the navigation bar, and change it if necessary. This is where the network infrastructure for {partner-product-name} will be built. The template is launched in the {default_deployment_region} Region by default. For other choices, see link:#_supported_regions[Supported Regions] earlier in this guide.
 . On the *Create stack* page, keep the default setting for the template URL, and then choose *Next*.
