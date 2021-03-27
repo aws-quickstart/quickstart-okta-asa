@@ -1,27 +1,27 @@
 === Set up Okta Advanced Server Access
 
-==== Sign in to your Okta Advanced Server Access Team
+==== Sign in to your Okta Advanced Server Access team
 
-Sign in to your Okta Advanced Server Access Team at https://app.scaleft.com with your Okta credentials. If you do not have an Advanced Server Access Team, see Planning the deployment earlier in this guide for instructions on how to create a tenant. 
+Sign in to your Okta Advanced Server Access team at https://app.scaleft.com with your Okta credentials. If you do not have an Advanced Server Access team, see link:#_planning_the_deployment[Planning the deployment] earlier in this guide for instructions on how to create a tenant. 
 
-==== Create a Project
+==== Create a project
 
-Create a new Advanced Server Access Project, which represents the authorization scope for a set of EC2 instances. Users and Groups are explicitly assigned to Projects, where role-based access and entitlements are specified. Okta manages and provisions accounts and entitlements to the downstream EC2 instances.
+Create a new Advanced Server Access project, which represents the authorization scope for a set of EC2 instances. Users and Groups are explicitly assigned to projects, where role-based access and entitlements are specified. Okta manages and provisions accounts and entitlements to the downstream EC2 instances.
 
 :xrefstyle: short
 [#deploy1]
 .Creating a project in {partner-product-name}
 [link=images/asa_create_project.png]
-image::../images/asa_create_project.png[Creating Project in Okta Advanced Server Access,width=648,height=439]
+image::../images/asa_create_project.png[Creating a project in Okta Advanced Server Access]
 
 ==== Configure instance enrollment
 
-In Okta Advanced Server Access, EC2 instances are enrolled with a specific Project via Enrollment Tokens or using Auto Enrollment. This quickstart supports server enrollment via enrollment tokens:
+In Okta Advanced Server Access, EC2 instances are enrolled with a specific project using enrollment tokens or automatic enrollment. This Quick Start supports server enrollment using enrollment tokens.
 
-1. Go to the Project detail page, and select the **Enrollment Tab**.
-2. Click **Create Enrollment Token**
-3. Give your Token a name, and click **Submit**
-4. Copy the Token value in the next screen for future reference
+. Go to the project detail page, and choose the **Enrollment** tab.
+. Choose **Create Enrollment Token**.
+. Name your token, and choose **Submit**.
+. Copy the token value in the next screen for future reference.
 
 === Confirm your AWS account configuration
 
@@ -45,7 +45,7 @@ endif::marketplace_subscription[]
 
 === Launch the Quick Start
 
-WARNING: If you’re deploying {partner-product-short-name} into an existing VPC, make sure that your VPC has two private subnets in different Availability Zones for the workload instances and that the subnets aren’t shared. This Quick Start doesn’t support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^]. These subnets require https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html[NAT gateways^] in their route tables to allow the instances to download packages and software without exposing them to the internet. Also make sure that the domain name option in the DHCP options is configured as explained in http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html[DHCP options sets^]. You provide your VPC settings when you launch the Quick Start.
+WARNING: If you're deploying {partner-product-short-name} into an existing VPC, make sure that your VPC has two private subnets in different Availability Zones for the workload instances and that the subnets aren't shared. This Quick Start doesn't support https://docs.aws.amazon.com/vpc/latest/userguide/vpc-sharing.html[shared subnets^]. These subnets require https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html[NAT gateways^] in their route tables to allow the instances to download packages and software without exposing them to the internet. Also make sure that the domain name option in the DHCP options is configured as explained in http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html[DHCP options sets^]. You provide your VPC settings when you launch the Quick Start.
 
 Each deployment takes about {deployment_time} to complete.
 
@@ -54,11 +54,12 @@ Each deployment takes about {deployment_time} to complete.
 [cols="3,1"]
 |===
 ^|https://fwd.aws/TBD[Deploy {partner-product-short-name} into a new VPC on AWS^] 
-^|link:=../../templates/okta-asa-master.template[View template^]
+^|link:=../../templates/okta-asa-main.template[View template^]
 ^|https://fwd.aws/TBD[Deploy {partner-product-short-name} into an existing VPC on AWS^] 
 ^|link:=../../templates/okta-asa-bastion.template[View template^]
 |===
+//TODO Dave, For existing-VPC option, we deploy just one template, right (okta-asa-bastion.template.yaml)? I'm guessing, though, that we need to give people two "view template" links for that option: one to view okta-asa-bastion.template.yaml and one to view okta-asa-target.template.yaml (since each file has its own parameter table). Is that right? If so, would a note of explanation be helpful as to why we have two "launch" templates for this one deployment option?
 +
-. Check the AWS Region that’s displayed in the upper-right corner of the navigation bar, and change it if necessary. This is where the network infrastructure for {partner-product-name} will be built. The template is launched in the {default_deployment_region} Region by default. For other choices, see link:#_supported_regions[Supported Regions] earlier in this guide.
+. Check the AWS Region that's displayed in the upper-right corner of the navigation bar, and change it if necessary. This is where the network infrastructure for {partner-product-name} will be built. The template is launched in the {default_deployment_region} Region by default. For other choices, see link:#_supported_regions[Supported Regions] earlier in this guide.
 . On the *Create stack* page, keep the default setting for the template URL, and then choose *Next*.
 . On the *Specify stack details* page, change the stack name if needed. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary.
