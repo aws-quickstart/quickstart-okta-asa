@@ -26,40 +26,24 @@ If you receive an error trying to log in, make sure that you completed all the p
 
 == Create projects for each environment: A best practice
 
-Configuring projects is an exercise in organizational structure and permissions modeling. There's an infinite number of possible combinations. Considering that a server can belong to only one project, getting projects right early on is like laying a strong foundation for your house. The most effective way to determine project structure is to think in terms of environments. 
+Configuring projects is an exercise in organizational structure and permissions modeling. There are an infinite number of possible combinations. Considering that a server can belong to only one project, getting projects right early on is like laying a strong foundation for your house. The most effective way to determine project structure is to think in terms of environments. 
 
-The trick is to find the right balance of coarse-grained and fine-grained environments where you can effectively grant access to the right people in a clear manner without overburdening yourself as an administrator. For example, a coarse-grained environment might be a single AWS Region. A fine-grained environment might be EC2 instances tagged as `App1-Prod`.
+It is important to find the right balance of coarse-grained and fine-grained environments where you can effectively grant access to the right people in a clear manner without overburdening yourself as an administrator. For example, a coarse-grained environment might be a single AWS Region, while a fine-grained environment might be EC2 instances tagged as `App1-Prod`.
 
-When creating projects, also consider local-account lifecycle management, a key feature of {partner-product-short-name}. This is especially important if you plan to deploy across existing (brownfield) server deployments. In these cases, the installed server agent creates and manages the local user and group accounts on the machine. Avoid performing this in a destructive manner that could impact your existing accounts and configurations. 
+When creating projects, also consider local account lifecycle management, a key feature of {partner-product-short-name}. This is especially important if you plan to deploy across existing (brownfield) server deployments. In these cases, the installed server agent creates and manages the local user and group accounts on the machine. Avoid performing this in a manner that could delete or reconfigure the existing local server accounts.
 
-//TODO Dave, I revised the previous paragraph, but I'm still unclear on what it's trying to convey. What do we mean by "destructive"? And how do we avoid the "impact"? I know that my revision isn't accurate. Please do your magic! :)
+When you create a new ASA project, you determine a starting point for user ID (UID) and group ID (GID). These numbers increment with every user that is explicitly added. The default starting point is 60001 for UID and 63001 for GID. This starting point is configurable at the project level (see https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/set-project-level-attributes-in-adv-server-access.htm[Set project-level user and group attributes in Advanced Server Access]). The default numbers are high to avoid potential conflicts with existing user accounts on the machine. In the case of a conflict, the server agent takes over management of the account. This takeover could break any existing local configurations or mounted file sharing.  
 
-When you create a new ASA project, you determine a starting point for user ID (UID) and group ID (GID). These numbers increment with every user that is explicitly added. The default starting point is 60001 for UID and 63001 for GID. This starting point is configurable at the project level (see below). The default numbers are high to avoid potential conflicts with existing user accounts on the machine. In the case of a conflict, the server agent takes over management of the account. This takeover could break any existing local configurations or mounted file sharing. 
+Before installing the server agent on servers with existing user accounts, perform a brief discovery exercise that outputs the existing accounts with their respective attributes, such as UID and GID. As an added benefit, this exercise inventories the existing credentials on the server, management of which you can eliminate by using {partner-product-short-name}.
 
-//TODO Dave, In the previous paragraph, which section is the "(see below)" referring to?
+== Security: Client certificate authentication
 
-//TODO Dave, In the previous paragraph, I changed "box" to "machine" (which we say elsewhere). If that's not right, please change it back. 
+Each Advanced Server Access project is associated with its own programmable certificate authority (CA). It's not a traditional CA as you may be used to with web public-key infrastructure. It mints certificates with as limited a scope and as short a time to live (TTL) as possible so there's no need to maintain certificate-revocation lists (CRLs) or use the Online Certificate Status Protocol (OCSP).
 
-Before installing the server agent on servers with existing user accounts, perform a brief discovery exercise that outputs the existing accounts with their respective attributes, such as UID and GID. As an added benefit, this exercise inventories the existing credentials on the server, which you can eliminate by using {partner-product-short-name}.
+Each time a customer creates a project within a team, a new CA is spun up. The private key that backs the project CA is stored in AWS Key Management Service (AWS KMS), and an internal security policy is associated with it.
 
-//TODO Dave, I revised the previous sentence as far as I could for clarity, but I still don't get what, exactly, we can "eliminate by using ASA.""
-
-//TODO Dave, Would any of this section lend itself to rewriting as step-by-step instructions (such as "perform a brief discovery exercise...")? Or might any of this info belong tucked into our existing step-by-step instructions to make sure that people take these actions at the right time (such as "Before installing the server agent on servers with existing user accounts...")? 
-
-== Security: Client-certificate authentication
-
-Each Advanced Server Access project is associated with its own programmable certificate authority (CA). It's not a traditional CA as you may be used to with web public-key infrastructure. It mints certificates with as limited a scope and as short a time to live (TTL) as possible. So there's no need to maintain certificate-revocation lists (CRLs) or use the Online Certificate Status Protocol (OCSP).
-
-Each time a customer creates a project within a team, a new CA is spun up. The private key that backs the project CA is stored in AWS Key Management Service (AWS KMS), and an internal security policy is associated with it. This policy is subject to compliance, and our procedures meet requirements.
-
-//TODO Dave, What does it mean to say (above), "This policy is subject to compliance, and our procedures meet requirements"? We have to be extra careful about compliance-related statements.
-
-//TODO Dave, Given what we say about AWS KMS in the prev. paragraph, any chance it makes sense to show it in the architecture diagram? If so, please revise the image and the bulleted list.
+//TODO Dave, Given what we say about AWS KMS in the prev. paragraph, any chance it makes sense to show it in the architecture diagram? If so, please revise the image and the bulleted list. Marcia: the Quick Start itself doesn't store anything in KMS; after the Quick Start is deployed, if the customer creates a new ASA project, a key is stored in KMS. This is outside the scope of the Quick Start.
 
 When a server is enrolled with a project and the server agent is installed, the server is configured to trust client certificates signed by that project's programmable CA. The project's CA is what mints each client certificate upon the authentication and authorization of a request. The project uses OpenSSH certificates for Linux and X.509 certificates for Windows. The user and device are injected as metadata with a TTL of three minutes. The three minutes accounts for clock drift on the target machines.
 
-The CA mints the client certificate and sends it to the client application, which uses the certificate in memory to initiate a secure session with the target server. To limit the scope, the client uses only certificates of the strongly authenticated Okta session plus device metadata, and the server accepts only client certificates signed by that project's CA. Because each project has a role-based access control (RBAC) scope, a specific user would have access to the enrolled servers. When the certificate expires, it is rendered useless.
-
-The attack surface is then limited to a full machine takeover with a strongly authenticated Okta session bound to the client, where the client is still enrolled with the team. In this case, the user could still be authenticated and authorized to receive freshly minted certificates for additional servers. When the Okta session expires, or when the client is revoked or unenrolled, that attack surface is closed.
-
-//TODO Dave, This section on security will probably draw legal scrutiny. If you see anything that might be a red flag, please address it before we send it to Tad so that we can minimize churn. Thanks!
+The CA mints the client certificate and sends it to the client application, which uses the certificate in memory to initiate a secure session with the target server. To limit the scope, the client uses only certificates of the Okta session plus device metadata, and the server accepts only client certificates signed by that project's CA. Because each project has a role-based access control (RBAC) scope, a specific user would have access to the enrolled servers. When the certificate expires, it is rendered useless.

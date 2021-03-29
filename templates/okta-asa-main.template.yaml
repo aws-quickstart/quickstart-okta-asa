@@ -350,3 +350,13 @@ Resources:
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
         VPCID: !GetAtt 'VPCStack.Outputs.VPCID'
         EnrollmentToken: !Ref EnrollmentToken
+Outputs:
+  TargetAutoScalingGroup:
+    Value: !GetAtt 'TargetStack.Outputs.TargetAutoScalingGroup'
+    Description: Target Auto Scaling Group Reference ID
+  BastionAutoScalingGroup:
+    Value: !GetAtt 'BastionStack.Outputs.BastionAutoScalingGroup'
+    Description: Bastion Auto Scaling Group Reference ID
+  Postdeployment:
+    Description: To test your deployment, see the procedure in the deployment guide.
+    Value: <Permalink to deployment guide>

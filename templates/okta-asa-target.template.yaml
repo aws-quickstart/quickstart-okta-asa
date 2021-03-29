@@ -694,3 +694,6 @@ Outputs:
       - !Ref AlternativeIAMRole
     Export:
       Name: !Sub '${AWS::StackName}-TargetHostRole'
+  Postdeployment:
+    Description: To test your deployment, see the procedure in the deployment guide.
+    Value: <Permalink to deployment guide>
