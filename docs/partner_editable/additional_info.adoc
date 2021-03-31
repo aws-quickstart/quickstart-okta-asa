@@ -1,14 +1,10 @@
 // Add steps as necessary for accessing the software, post-configuration, and testing. Don't include full usage instructions for your software, but add links to your product documentation for that information.
-//Should any sections not be applicable, remove them
-
-//== Test the deployment
-// If steps are required to test the deployment, add them here. If not, remove the heading
 
 == Test the deployment
 
-After the AWS CloudFormation stack is complete, you can test the deployment by checking whether the instances were properly enrolled with your Advanced Server Access project.
+After the AWS CloudFormation stack is complete, you can test the deployment by checking whether the instances were properly enrolled with your {partner-product-short-name} project.
 
-. Visit the https://app.scaleft.com[Advanced Server Access dashboard^].
+. Visit the https://app.scaleft.com[{partner-product-name} dashboard^].
 
 . Sign in to your team, and then choose the project that you created for this Quick Start.
 
@@ -24,6 +20,10 @@ If you receive an error trying to log in, make sure that you completed all the p
 +
 `$ ps -aux | grep sftd`
 
+== Add target hosts ==
+
+After the Quick Start is deployed in your environment, you can use the template https://github.com/aws-quickstart/quickstart-okta-asa/blob/main/templates/okta-asa-target.template.yaml[okta-asa-target.template.yaml^] to deploy additional target-host Auto Scaling groups. To do this, upload the template to an S3 bucket, and use the S3 path in the CloudFormation console.
+
 == Create projects for each environment: A best practice
 
 Configuring projects is an exercise in organizational structure and permissions modeling. There are an infinite number of possible combinations. Considering that a server can belong to only one project, getting projects right early on is like laying a strong foundation for your house. The most effective way to determine project structure is to think in terms of environments. 
@@ -32,17 +32,17 @@ It is important to find the right balance of coarse-grained and fine-grained env
 
 When creating projects, also consider local account lifecycle management, a key feature of {partner-product-short-name}. This is especially important if you plan to deploy across existing (brownfield) server deployments. In these cases, the installed server agent creates and manages the local user and group accounts on the machine. Avoid performing this in a manner that could delete or reconfigure the existing local server accounts.
 
-When you create a new ASA project, you determine a starting point for user ID (UID) and group ID (GID). These numbers increment with every user that is explicitly added. The default starting point is 60001 for UID and 63001 for GID. This starting point is configurable at the project level (see https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/set-project-level-attributes-in-adv-server-access.htm[Set project-level user and group attributes in Advanced Server Access]). The default numbers are high to avoid potential conflicts with existing user accounts on the machine. In the case of a conflict, the server agent takes over management of the account. This takeover could break any existing local configurations or mounted file sharing.  
+When you create an ASA project, you determine a starting point for user ID (UID) and group ID (GID). These numbers increment with every user that is explicitly added. The default starting point is 60001 for UID and 63001 for GID. This starting point is configurable at the project level (see https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/set-project-level-attributes-in-adv-server-access.htm[Set project-level user and group attributes in Advanced Server Access^]). The default numbers are high to avoid potential conflicts with existing user accounts on the machine. In the case of a conflict, the server agent takes over management of the account. This takeover could break any existing local configurations or mounted file sharing.  
 
 Before installing the server agent on servers with existing user accounts, perform a brief discovery exercise that outputs the existing accounts with their respective attributes, such as UID and GID. As an added benefit, this exercise inventories the existing credentials on the server, management of which you can eliminate by using {partner-product-short-name}.
 
 == Security: Client certificate authentication
 
-Each Advanced Server Access project is associated with its own programmable certificate authority (CA). It's not a traditional CA as you may be used to with web public-key infrastructure. It mints certificates with as limited a scope and as short a time to live (TTL) as possible so there's no need to maintain certificate-revocation lists (CRLs) or use the Online Certificate Status Protocol (OCSP).
+Each {partner-product-short-name} project is associated with its own programmable certificate authority (CA). It's not a traditional CA as you may be used to with web public-key infrastructure. It mints certificates with as limited a scope and as short a time to live (TTL) as possible so there's no need to maintain certificate-revocation lists (CRLs) or use the Online Certificate Status Protocol (OCSP).
 
 Each time a customer creates a project within a team, a new CA is spun up. The private key that backs the project CA is stored in AWS Key Management Service (AWS KMS), and an internal security policy is associated with it.
 
-//TODO Dave, Given what we say about AWS KMS in the prev. paragraph, any chance it makes sense to show it in the architecture diagram? If so, please revise the image and the bulleted list. Marcia: the Quick Start itself doesn't store anything in KMS; after the Quick Start is deployed, if the customer creates a new ASA project, a key is stored in KMS. This is outside the scope of the Quick Start.
+//FWIW, we don't show KMS in the architecture diagram because because it's outside the scope of the Quick Start. The Quick Start itself doesn't store anything in KMS. After the Quick Start is deployed, if the customer creates a new ASA project, a key is stored in KMS.
 
 When a server is enrolled with a project and the server agent is installed, the server is configured to trust client certificates signed by that project's programmable CA. The project's CA is what mints each client certificate upon the authentication and authorization of a request. The project uses OpenSSH certificates for Linux and X.509 certificates for Windows. The user and device are injected as metadata with a TTL of three minutes. The three minutes accounts for clock drift on the target machines.
 

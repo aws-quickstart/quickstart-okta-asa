@@ -3,7 +3,7 @@ Description: This AWS CloudFormation template deploys a bastion host enrolled wi
 Metadata:
   LICENSE: Apache License, Version 2.0
   QuickStartDocumentation:
-    EntrypointName: "Parameters for deploying an ASA bastion host into an existing VPC"
+    EntrypointName: "Parameters for deploying Okta ASA into an existing VPC"
     Order: "2"
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -150,16 +150,14 @@ Parameters:
     Type: String
   EnableTCPForwarding:
     Type: String
-    Description: To disable TCP forwarding, choose "false."
-    # TODO Dave, At the beginning of this description, please tell what happens when this parameter is enabled and (if it's not obvious) why people might want to disable it.
+    Description: With TCP forwarding on a Linux bastion host, you can set up direct connections from outside of the VPC to services running in private subnets by routing the traffic through the bastion host. To disable TCP forwarding, choose "false."
     Default: 'true'
     AllowedValues:
       - 'true'
       - 'false'
   EnableX11Forwarding:
     Type: String
-    Description: To disable X11 forwarding, choose "false."
-    # TODO Dave, At the beginning of this description, please tell what happens when this parameter is enabled and (if it's not obvious) why people might want to disable it.
+    Description: With X11 forwarding on a Linux bastion host, you can establish management connections to Linux instances using GUIs (as opposed to text-based SSH connections). To disable X11 forwarding, choose "false."
     Default: 'true'
     AllowedValues:
       - 'true'
@@ -765,4 +763,4 @@ Outputs:
       Name: !Sub '${AWS::StackName}-BastionHostRole'
   Postdeployment:
     Description: To test your deployment, see the procedure in the deployment guide.
-    Value: <Permalink to deployment guide>    
+    Value: https://fwd.aws/3EYzN    
