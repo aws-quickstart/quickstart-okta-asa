@@ -5,4 +5,4 @@ This Quick Start also assumes familiarity with Okta, Linux account management, S
 
 === Okta account
 
-To use this Quick Start, you must be an Okta Org administrator. If you don't already have an Okta account, https://www.okta.com/free-trial[sign up for a free trial^]. Okta Advanced Server Access is an integrated application with an existing Okta Org. To create an Advanced Server Access team, visit the https://app.scaleft.com/p/signup[sign-up page^], and follow the instructions.
+To use this Quick Start, you must be an Okta Org administrator. If you don't already have an Okta account, https://www.okta.com/free-trial[sign up for a free trial^]. {partner-product-name} is an integrated application with an existing Okta Org. To create an {partner-product-short-name} team, visit the https://app.scaleft.com/p/signup[sign-up page^], and follow the instructions.
