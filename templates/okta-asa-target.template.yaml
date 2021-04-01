@@ -56,9 +56,9 @@ Metadata:
       EC2AMIOS:
         default: AMI operating system
       BastionHostName:
-        default: Bastion-host name
+        default: Bastion host name
       TargetHostName:
-        default: Target-host name
+        default: Target host name
       EC2Tenancy:
         default: Target tenancy
       EC2Banner:
@@ -76,7 +76,7 @@ Metadata:
       EnvironmentVariables:
         default: Environment variables
       KeyPairName:
-        default: Key-pair name
+        default: Key pair name
       NumEC2Hosts:
         default: Number of target hosts
       OSImageOverride:
@@ -92,7 +92,7 @@ Metadata:
       VPCID:
         default: VPC ID
       RootVolumeSize:
-        default: Root-volume size
+        default: Root volume size
       EnrollmentToken:
         default: Okta Advanced Server Access enrollment token
   cfn-lint: { config: { ignore_checks: [E9007] } }
@@ -236,7 +236,7 @@ Parameters:
     Type: String
     Default: ''
   AlternativeIAMRole:
-    Description: Existing IAM role name to attach to the target. If left blank,
+    Description: Existing IAM role name to attach to the target. If kept blank,
       a new role will be created.
     Default: ''
     Type: String

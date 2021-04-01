@@ -13,7 +13,7 @@ As shown in <<architecture1>>, the Quick Start deploys the following:
 * In the public subnets:
 
 ** Managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets.*
-** A Linux bastion host in an Auto Scaling group. This Linux bastion host has the Okta server agent installed and shares a configuration to act as the bastion host for SSH access to EC2 instances in the private subnets.
+** A Linux bastion host in an Auto Scaling group. This host has the Okta server agent installed. It shares a configuration to act as the bastion for SSH access to EC2 instances in the private subnets.
 
 * In the private subnets, a Linux EC2 instance (target host) in an Auto Scaling group. This target host has the Okta server agent installed and is configured to be accessible only through the Linux bastion host in the public subnet.*
 
