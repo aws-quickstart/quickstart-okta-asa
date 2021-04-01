@@ -51,9 +51,9 @@ Metadata:
       EC2AMIOS:
         default: Bastion AMI operating system
       BastionHostName:
-        default: Bastion-host name
+        default: Bastion host name
       TargetHostName:
-        default: Target-host name
+        default: Target host name
       EC2Tenancy:
         default: Bastion tenancy
       EC2Banner:
@@ -69,7 +69,7 @@ Metadata:
       EnableX11Forwarding:
         default: X11 forwarding
       KeyPairName:
-        default: Key-pair name
+        default: Key pair name
       NumEC2Hosts:
         default: Number of bastion hosts
       PrivateSubnet1CIDR:
