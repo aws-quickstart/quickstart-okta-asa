@@ -1,8 +1,8 @@
 // Replace the content in <>
 // Describe or link to specific knowledge requirements; for example: “familiarity with basic concepts in the areas of networking, database operations, and data encryption” or “familiarity with <software>.”
 
-This Quick Start also assumes familiarity with Okta, Linux account management, SSH access, and networking. If you’re new to Okta, visit the https://www.okta.com/[Okta website] and the https://help.okta.com/en/prod/Content/index.htm[Okta Product Documentation] for information about the Okta Identity Cloud.
+This Quick Start also assumes familiarity with Okta, Linux account management, SSH access, and networking. If you're new to Okta, visit the https://www.okta.com/[Okta website^] and the https://help.okta.com/en/prod/Content/index.htm[Okta product documentation^] for information about the Okta Identity Cloud.
 
-=== {partner-company-name} and {partner-product-name} account
+=== Okta account
 
-In order to proceed with this Quick Start Guide, you must be an Okta Org Administrator. If you don’t already have an Okta account, https://www.okta.com/free-trial[sign up for a Free Trial]. Okta Advanced Server Access is an integrated application with an existing Okta Org. To create an Advanced Server Access Team visit https://app.scaleft.com/p/signup and follow the signup instructions.
+To use this Quick Start, you must be an Okta Org administrator. If you don't already have an Okta account, https://www.okta.com/free-trial[sign up for a free trial^]. {partner-product-name} is an integrated application with an existing Okta Org. To create an {partner-product-short-name} team, visit the https://app.scaleft.com/p/signup[sign-up page^], and follow the instructions.

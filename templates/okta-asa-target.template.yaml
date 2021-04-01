@@ -1,10 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: This CloudFormation template deploys a target host enrolled with Okta Advanced Server Access (qs-1rm280cl7)
+Description: This AWS CloudFormation template deploys a target host enrolled with Okta Advanced Server Access (qs-1rm280cl7)
 Metadata:
   LICENSE: Apache License, Version 2.0
-  QuickStartDocumentation:
-    EntrypointName: "Launch an ASA target into an existing VPC"
-    Order: "3"
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -46,12 +43,12 @@ Metadata:
           - QSS3KeyPrefix
           - QSS3BucketRegion
       - Label:
-          default: "Okta Advanced Server Access Parameters"
+          default: "Okta Advanced Server Access parameters"
         Parameters:
           - EnrollmentToken
     ParameterLabels:
       BastionSecurityGroupID:
-        default: Bastion Security Group ID
+        default: Bastion security group ID
       AlternativeIAMRole:
         default: Alternative IAM role
       AlternativeInitializationScript:
@@ -59,15 +56,15 @@ Metadata:
       EC2AMIOS:
         default: AMI operating system
       BastionHostName:
-        default: Bastion Host Name
+        default: Bastion host name
       TargetHostName:
-        default: Target Host Name
+        default: Target host name
       EC2Tenancy:
         default: Target tenancy
       EC2Banner:
         default: Banner text
       QSS3BucketRegion:
-        default: Quick Start S3 bucket region
+        default: Quick Start S3 bucket Region
       EC2InstanceType:
         default: Target instance type
       EnableBanner:
@@ -83,11 +80,11 @@ Metadata:
       NumEC2Hosts:
         default: Number of target hosts
       OSImageOverride:
-        default: Operating system override
+        default: Operating-system image override
       PrivateSubnet1ID:
-        default: Private Subnet 1 ID
+        default: Private subnet 1 ID
       PrivateSubnet2ID:
-        default: Private Subnet 2 ID
+        default: Private subnet 2 ID
       QSS3BucketName:
         default: Quick Start S3 bucket name
       QSS3KeyPrefix:
@@ -97,12 +94,12 @@ Metadata:
       RootVolumeSize:
         default: Root volume size
       EnrollmentToken:
-        default: Okta Advanced Server Access Enrollment Token
+        default: Okta Advanced Server Access enrollment token
   cfn-lint: { config: { ignore_checks: [E9007] } }
 Parameters:
   BastionSecurityGroupID:
     Description: ID of the bastion host security group to enable SSH connections (e.g.,
-      sg-7f16e910)
+      sg-7f16e910).
     Type: AWS::EC2::SecurityGroup::Id
   EC2AMIOS:
     AllowedValues:
@@ -111,21 +108,21 @@ Parameters:
       - SUSE-SLES-15-HVM
       - Amazon-Linux2-HVM
     Default: Amazon-Linux2-HVM
-    Description: The Linux distribution for the AMI to be used for the target instances.
+    Description: Linux distribution for the AMI to be used for the target instances.
     Type: String
   BastionHostName:
-    Description: The value used for the name tag of the bastion host
+    Description: Value used for the name tag of the bastion host.
     Type: String
   TargetHostName:
     Default: 'LinuxTarget'
-    Description: The value used for the name tag of the target host
+    Description: Value used for the name tag of the target host.
     Type: String
   EC2Banner:
     Default: ""
     Description: Banner text to display upon login.
     Type: String
   EC2Tenancy:
-    Description: 'VPC tenancy to launch the target in. Options: ''dedicated'' or ''default'''
+    Description: 'VPC tenancy to launch the target in. To change from "default," choose "dedicated."'
     Type: String
     Default: default
     AllowedValues:
@@ -156,24 +153,24 @@ Parameters:
       - 'true'
       - 'false'
     Default: 'false'
-    Description: To include a banner to be displayed when connecting via SSH to the target, choose true.
+    Description: To display a banner when connecting to the target using SSH, choose "true."
     Type: String
   EnableTCPForwarding:
     Type: String
-    Description: To enable TCP forwarding, choose true.
+    Description: With TCP forwarding on a Linux bastion host, you can set up direct connections from outside of the VPC to services running in private subnets by routing the traffic through the bastion host. To disable TCP forwarding, choose "false."
     Default: 'true'
     AllowedValues:
       - 'true'
       - 'false'
   EnableX11Forwarding:
     Type: String
-    Description: To enable X11 forwarding, choose true.
+    Description: With X11 forwarding on a Linux bastion host, you can establish management connections to Linux instances using GUIs (as opposed to text-based SSH connections). To disable X11 forwarding, choose "false."
     Default: 'true'
     AllowedValues:
       - 'true'
       - 'false'
   KeyPairName:
-    Description: Name of an existing public/private key pair. If you do not have one in this AWS Region, please create it before continuing.
+    Description: Name of an existing public/private key pair. You use this name to securely connect to your instance after it launches. If you do not have one in this AWS Region, create one before continuing.
     Type: 'AWS::EC2::KeyPair::KeyName'
   NumEC2Hosts:
     AllowedValues:
@@ -185,19 +182,23 @@ Parameters:
     Description: The number of target hosts to create. The maximum number is four.
     Type: String
   PrivateSubnet1ID:
-    Description: ID of the private subnet 1 in Availability Zone 1 (e.g., subnet-a0246dcd)
+    Description: ID of the private subnet 1 in Availability Zone 1 (e.g., subnet-a0246dcd).
     Type: AWS::EC2::Subnet::Id
   PrivateSubnet2ID:
-    Description: ID of the private subnet 2 in Availability Zone 2 (e.g., subnet-a0246dcd)
+    Description: ID of the private subnet 2 in Availability Zone 2 (e.g., subnet-a0246dcd).
     Type: AWS::EC2::Subnet::Id
   QSS3BucketName:
     AllowedPattern: '^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$'
-    ConstraintDescription: Quick Start bucket name can include numbers, lowercase letters, uppercase
-      letters, and hyphens (-). It cannot start or end with a hyphen (-).
+    ConstraintDescription: The Quick Start bucket name can include numbers, lowercase
+      letters, uppercase letters, and hyphens (-). It cannot start or end with a 
+      hyphen (-).
     Default: aws-quickstart
-    Description: S3 bucket name for the Quick Start assets. Quick Start bucket name can
-      include numbers, lowercase letters, uppercase letters, and hyphens (-). It
-      cannot start or end with a hyphen (-).
+    Description: Name of the S3 bucket for your copy of the Quick Start assets. 
+      Keep the default name unless you are customizing the template. 
+      Changing the name updates code references to point to a new Quick 
+      Start location. This name can include numbers, lowercase letters, 
+      uppercase letters, and hyphens, but do not start or end with a hyphen (-). 
+      See https://aws-quickstart.github.io/option1.html.
     Type: String
   QSS3BucketRegion:
     Default: 'us-east-1'
@@ -209,13 +210,17 @@ Parameters:
     Type: String
   QSS3KeyPrefix:
     AllowedPattern: '^([0-9a-zA-Z-.]+/)*$'
-    ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters, uppercase
-      letters, hyphens (-), dots (.) and forward slash (/). The prefix should
+    ConstraintDescription: The Quick Start S3 key prefix can include numbers, lowercase letters,
+      uppercase letters, hyphens (-), and forward slashes (/). The prefix should
       end with a forward slash (/).
     Default: quickstart-okta-asa/
-    Description: S3 key prefix for the Quick Start assets. Quick Start key prefix can
-      include numbers, lowercase letters, uppercase letters, hyphens (-), dots
-      (.) and forward slash (/) and it should end with a forward slash (/).
+    Description: S3 key prefix that is used to simulate a directory for your copy of the 
+      Quick Start assets. Keep the default prefix unless you are customizing 
+      the template. Changing this prefix updates code references to point to 
+      a new Quick Start location. This prefix can include numbers, lowercase 
+      letters, uppercase letters, hyphens (-), and forward slashes (/). End with a forward slash. 
+      See https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html 
+      and https://aws-quickstart.github.io/option1.html.
     Type: String
   VPCID:
     Description: 'ID of the VPC (e.g., vpc-0343606e).'
@@ -223,33 +228,33 @@ Parameters:
   AlternativeInitializationScript:
     AllowedPattern: ^http.*|^$
     ConstraintDescription: URL must begin with http
-    Description: An alternative initialization script to run during setup.
+    Description: Alternative initialization script to run during setup.
     Default: ''
     Type: String
   OSImageOverride:
-    Description: The Region-specific image to use for the instance.
+    Description: Region-specific image to use for the instance.
     Type: String
     Default: ''
   AlternativeIAMRole:
-    Description: An existing IAM Role name to attach to the target. If left blank,
+    Description: Existing IAM role name to attach to the target. If kept blank,
       a new role will be created.
     Default: ''
     Type: String
   EnvironmentVariables:
-    Description: A comma-separated list of environment variables for use in
+    Description: Comma-separated list of environment variables for use in
       bootstrapping. Variables must be in the format KEY=VALUE. VALUE cannot
       contain commas.
     Type: String
     Default: ''
   RootVolumeSize:
-    Description: The size in GB for the root EBS volume.
+    Description: Size in GB for the root EBS volume.
     Type: Number
     Default: '10'
   EnrollmentToken:
     Type: String
-    Description: Okta Advanced Server Access Enrollment Token
+    Description: Okta Advanced Server Access enrollment token.
     MinLength: 24
-    ConstraintDescription: Must contain a valid ASA enrollment token
+    ConstraintDescription: Must contain a valid ASA enrollment token.
 Rules:
   SubnetsInVPC:
     Assertions:
@@ -259,7 +264,7 @@ Rules:
                 - 'AWS::EC2::Subnet::Id'
                 - VpcId
             - 'Fn::RefAll': 'AWS::EC2::VPC::Id'
-        AssertDescription: All subnets must exist in the VPC
+        AssertDescription: All subnets must exist in the VPC.
 Mappings:
   AWSAMIRegionMap:
     af-south-1:
@@ -677,7 +682,7 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-TargetSecurityGroupID'
   TargetHostRole:
-    Description: Target IAM Role name
+    Description: Target IAM role name
     Value: !If
       - CreateIAMRole
       - !Ref TargetHostRole

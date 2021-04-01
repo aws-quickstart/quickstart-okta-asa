@@ -1,32 +1,22 @@
-// Add any tips or answers to anticipated questions. This could include the following troubleshooting information. If you don’t have any other Q&A to add, change “FAQ” to “Troubleshooting.”
+// Add any tips or answers to anticipated questions. 
 
 == FAQ
 
 *Q.* I encountered a *CREATE_FAILED* error when I launched the Quick Start.
 
-*A.* If AWS CloudFormation fails to create the stack, we recommend that you relaunch the template with *Rollback on failure* set to *No*. (This setting is under *Advanced* in the AWS CloudFormation console, *Options* page.) With this setting, the stack’s state is retained and the instance is left running, so you can troubleshoot the issue.
+*A.* If AWS CloudFormation fails to create the stack, relaunch the template with *Rollback on failure* set to *Disabled*. This setting is under *Advanced* in the AWS CloudFormation console on the *Configure stack options* page. With this setting, the stack's state is retained, and the instance keeps running so that you can troubleshoot the issue.
 
-WARNING: When you set *Rollback on failure* to *Disabled*, you continue to incur AWS charges for this stack. Please make sure to delete the stack when you finish troubleshooting.
+WARNING: When you set *Rollback on failure* to *Disabled*, you continue to incur AWS charges for this stack. Delete the stack when you finish troubleshooting.
 
-For additional information, see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting AWS CloudFormation^] on the AWS website.
+For more information, see https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting AWS CloudFormation^].
 
-*Q.* I encountered a size limitation error when I deployed the AWS CloudFormation templates.
+*Q.* I encountered a size-limitation error when I deployed the AWS CloudFormation templates.
 
-*A.* We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see the http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html[AWS documentation^].
+*A.* Launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template-size limitations. For more information, see http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html[AWS CloudFormation quotas^].
 
-//*Q.* The EC2 instances deployed in the stack do not show up in my Okta Advanced Server Access Dashboard
+== {partner-product-short-name} documentation
 
-//*A.* TODO
-
-//*Q.* I am unable to SSH into the deployed EC2 instances
-
-//*A.* TODO
-
-== Additional Resources
-
-Okta Advanced Server Access documentation:
-
-- https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/setup/introduction.htm[Advanced Server Access Setup]
-- https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/concepts.htm[Advanced Server Access Reference]
-- https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sftd.htm[Advanced Server Access Server Enrollment]
-- https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sft.htm[Advanced Server Access Client Application]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/start-here.htm[Advanced Server Access Setup^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/reference.htm[Advanced Server Access Reference^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sftd.htm[Deploy an Advanced Server Access server^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sft.htm[Install the Advanced Server Access client^]

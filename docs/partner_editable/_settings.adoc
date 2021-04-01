@@ -1,10 +1,11 @@
 :quickstart-project-name: quickstart-okta-asa
 :partner-product-name: Okta Advanced Server Access
-:partner-product-short-name: ASA
+:partner-product-short-name: Okta ASA
 :partner-company-name: Okta
-:doc-month: January
+:doc-month: April
 :doc-year: 2021
-:partner-contributors: Ivan Dwyer, Frederico Hakamine, and Adam Arkom
+:partner-contributors: Ivan Dwyer, Frederico Hakamine, and Adam Arkon, Okta
 :quickstart-contributors: Dave May, AWS Quick Start team
 :deployment_time: 30 minutes
 :default_deployment_region: us-east-1
+:parameters_as_appendix:

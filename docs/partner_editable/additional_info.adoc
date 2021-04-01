@@ -1,59 +1,49 @@
-// Add steps as necessary for accessing the software, post-configuration, and testing. Don’t include full usage instructions for your software, but add links to your product documentation for that information.
-//Should any sections not be applicable, remove them
-
-//== Test the deployment
-// If steps are required to test the deployment, add them here. If not, remove the heading
+// Add steps as necessary for accessing the software, post-configuration, and testing. Don't include full usage instructions for your software, but add links to your product documentation for that information.
 
 == Test the deployment
 
-Once the Cloud Formation stack is complete, you can test the deployment by checking whether the instances were properly enrolled with your Advanced Server Access Project.
+After the AWS CloudFormation stack is complete, you can test the deployment by checking whether the instances were properly enrolled with your {partner-product-short-name} project.
 
-1. Visit the Advanced Server Access Dashboard at: https://app.scaleft.com
-2. Login to your Team, and then select the Project you created for this Quick Start Guide
-3. Select the **Servers** tab. The bastion host and target host deployed in the stack should appear in the list. 
+. Visit the https://app.scaleft.com[{partner-product-name} dashboard^].
 
-**Note** If they do not show up in the Server inventory, that indicates that the enrollment process did not work. Doublecheck the Enrollment Token was copied over in full as a stack parameter.
+. Sign in to your team, and then choose the project that you created for this Quick Start.
 
-4. Select any one of the target instances, and copy the value for Name from the detail view. Open your local terminal and run:
+. Choose the **Servers** tab. The bastion host and target host deployed in the stack  appear in the server inventory list. If they don't, the enrollment process did not work. Confirm that the enrollment token was copied over in full as a stack parameter.
 
+. Choose any target instance, and copy the value for **Name** from the detail view. Open your local terminal and run the following command, replacing the bracketed text with your hostname:
++
 `$ sft ssh <hostname>`
-
-**Note** If you receive an error trying to login, make sure that you completed all the prerequisite steps, have the Client Application installed, and have assigned your user account to the Project the Servers belong to.
-
-5. Once the ssh connection is established, you can verify that the installation process was successful, and that the Server Agent is running, by running the command:
-
++
+If you receive an error while trying to log in, make sure that you completed all the prerequisite steps, that you have the client application installed, and that you have assigned your user account to the project that the servers belong to.
++
+. After the SSH connection is established, verify that the installation process was successful and that the server agent is running. To do this, run the following command:
++
 `$ ps -aux | grep sftd`
 
-== Best practices for using {partner-product-name} on AWS
+== Add target hosts ==
 
-=== Create Projects For Each Environment
+After the Quick Start is deployed in your environment, you can use the template https://github.com/aws-quickstart/quickstart-okta-asa/blob/main/templates/okta-asa-target.template.yaml[okta-asa-target.template.yaml^] to deploy additional target-host Auto Scaling groups. To do this, upload the template to an S3 bucket, and use the S3 path in the CloudFormation console.
 
-Configuring Projects is an exercise in organizational structure and permissions modeling, as there is an infinite number of possible combinations. Considering that a Server can only belong to a single Project, getting Projects right early on is like laying a strong foundation for your house. In working with our customers over the years, we’ve found that the most effective method in determining Project structure is to think in terms of environments. 
+== Create projects for each environment: A best practice
 
-The trick is to find the right balance of coarse-grained and fine-grained environments where you can effectively grant access to the right people in a clear manner, without over burdening you as an administrator. 
+Configuring projects is an exercise in organizational structure and permissions modeling. There are an infinite number of possible combinations. Considering that a server can belong to only one project, getting projects right early on is like laying a strong foundation for your house. The most effective way to determine project structure is to think in terms of environments. 
 
-- A coarse-grained example of an environment might be a single region
-- A fine-grained example of an environment might be EC2 instances tagged as App1-Prod
+Balance coarse-grained and fine-grained environments. For example, a coarse-grained environment might be a single AWS Region, while a fine-grained environment might be EC2 instances tagged as `App1-Prod`. A balance helps you grant access to the right people in a clear manner without overburdening yourself as an administrator. 
 
-When creating Projects, there are a few additional considerations to make, especially when you plan to deploy Advanced Server Access across existing brownfield server deployments. A key feature of ASA is local account lifecycle management, where the installed Server Agent creates and manages the local user and group accounts on the machine, however it is performed in a destructive manner than could impact your existing accounts and configurations. 
+When creating projects, also consider local account lifecycle management, a key feature of {partner-product-short-name}. This is especially important if you plan to deploy across existing (brownfield) server deployments. In these cases, the installed server agent creates and manages the local user and group accounts on the machine. Avoid performing this in a manner that could delete or reconfigure the existing local server accounts.
 
-When you create a new ASA Project, you determine a starting point for UID and GID, which increment with every user that is explicitly added. The default starting point is 60001 and 63001 respectively, which is configurable at the Project level (see below). The high default number is meant to avoid any potential conflicts with existing user accounts on the box, however in the case of a conflict, the Server Agent will takeover management of the account, which could break any existing local configurations and/or mounted file sharing. 
+When you create an {partner-product-short-name} project, you determine a starting point for user ID (UID) and group ID (GID). These numbers increment with every user that is explicitly added. The default starting point is 60001 for UID and 63001 for GID. This starting point is configurable at the project level (see https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/set-project-level-attributes-in-adv-server-access.htm[Set project-level user and group attributes in Advanced Server Access^]). The default numbers are high to avoid potential conflicts with existing user accounts on the machine. If there's a conflict, the server agent takes over management of the account. This takeover could break any existing local configurations or mounted file sharing.  
 
-Before installing the Server Agent on servers with existing user accounts, we recommend performing a brief discovery exercise that outputs the existing accounts with their respective attributes such as uid and gid. Another benefit of this exercise is to inventory the existing credentials on the server, which using ASA will enable you to eliminate.
+Before installing the server agent on servers with existing user accounts, perform a brief discovery exercise that outputs the existing accounts with their respective attributes, such as UID and GID. As an added benefit, this exercise inventories the existing credentials on the server, management of which you can reduce by using {partner-product-short-name}.
 
-== Security
+== Security: Client-certificate authentication
 
-=== About Client Certificate Authentication
+Each {partner-product-short-name} project is associated with its own programmable certificate authority (CA). It's not a traditional CA as you may be used to with web public key infrastructure. It mints certificates with as limited a scope and as short a time to live (TTL) as possible so there's no need to maintain certificate-revocation lists (CRLs) or use the Online Certificate Status Protocol (OCSP).
 
-A key outcome of leveraging Okta Advanced Server Access as your authentication mechanism to EC2 instances is no longer relying on static credentials to login. This greatly mitigates the risk of credential theft and misuse, and eliminates the need to wrap additional controls and management layers around secrets. With Okta, the credentials used to authenticate are ephemeral in the nature and use.
+Each time a customer creates a project within a team, a new CA is spun up. The private key that backs the project CA is stored in AWS Key Management Service (AWS KMS), and an internal security policy is associated with it.
 
-The way it works is that each Advanced Server Access Project is associated with its own programmable Certificate Authority (“CA”). It’s not a traditional CA as you may be used to with web PKI, it is designed to mint certificates with as limited a scope and short a TTL as possible. Because of this, there’s no need to maintain revocation lists via OCSP/CRLs.
+//FWIW, we don't show KMS in the architecture diagram because because it's outside the scope of the Quick Start. The Quick Start itself doesn't store anything in KMS. After the Quick Start is deployed, if the customer creates a new ASA project, a key is stored in KMS.
 
-Each time a customer creates a Project within their Team, a new CA is spun up. The private key that backs the Project CA is stored in AWS KMS, and we have an internal security policy associated with it. This policy is subject to compliance, and our procedures meet requirements.
-When a server is enrolled with a Project and the Server Agent installed, the server is configured to trust client certificates signed by that Project’s Programmable CA.
+When a server is enrolled with a project and the server agent is installed, the server is configured to trust client certificates signed by that project's programmable CA. The project's CA is what mints each client certificate upon the authentication and authorization of a request. The project uses OpenSSH certificates for Linux and X.509 certificates for Windows. The user and device info are injected as metadata with a TTL of three minutes. The three minutes account for clock drift on the target machines.
 
-The Project’s CA is what mints each client certificate upon the authentication and authorization of a request. OpenSSH certificates for Linux, and X.509 certificates for Windows. The user and device are injected as metadata, with a TTL of 3 minutes. The 3 minutes is to account for clock drift on the target machines.
-
-The CA mints the client certificate and sends to the Client Application, which uses the certificate in-memory to initiate a secure session with the target server. The way we limit the scope is the Client will only use certificates of the strongly authenticated Okta session plus device metadata, and the server will only accept client certificates signed by that Project’s CA. Because each Project is an RBAC scope, a specific user would have access to the enrolled servers. Once the certificate expires, it is rendered completely useless.
-
-The attack surface is then limited to a full machine takeover, with a strongly authenticated Okta session bound to the Client, where the Client was still enrolled with the Team. In this case, the user could still be authenticated and authorized to receive freshly minted certificates for additional servers. Upon expiration of the Okta session, or if the Client is revoked or unenrolled, that attack surface is closed.
+The CA mints the client certificate and sends it to the client application. The client application then uses the certificate in memory to initiate a secure session with the target server. To limit the scope, the client uses only certificates of the Okta session plus device metadata, and the server accepts only client certificates signed by that project's CA. Because each project has a role-based access control (RBAC) scope, a specific user would have access to the enrolled servers. When the certificate expires, it is rendered useless.

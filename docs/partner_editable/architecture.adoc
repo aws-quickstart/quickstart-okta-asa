@@ -1,26 +1,20 @@
-Deploying this Quick Start for a new virtual private cloud (VPC) with
-*default parameters* builds the following _{partner-product-name}_ environment in the
-AWS Cloud.
+Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following {partner-product-name} environment in the AWS Cloud.
 
-// Replace this example diagram with your own. Send us your source PowerPoint file. Be sure to follow our guidelines here : http://(we should include these points on our contributors giude)
 :xrefstyle: short
 [#architecture1]
 .Quick Start architecture for _{partner-product-name}_ on AWS
-[link=images/architecture_diagram.png]
-image::../images/architecture_diagram.png[Architecture,width=648,height=439]
+image::../images/okta-asa-architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, the Quick Start deploys the following:
 
 * A highly available architecture that spans two Availability Zones.*
 * A VPC configured with public and private subnets, according to AWS best practices, to provide you with your own virtual network on AWS.*
 
-In the public subnets:
+* In the public subnets:
 
-* Managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets.*
-* In the public subnets, a Linux bastion host in an Auto Scaling group to allow inbound Secure Shell (SSH) access to EC2 instances in public and private subnets. The Linux bastion hosts have the Okta Server Agent installed and share a configuration to act as the bastion host for SSH access to the EC2 instances in the public subnet.
+** Managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets.*
+** A Linux bastion host in an Auto Scaling group. This host has the Okta server agent installed. It shares a configuration to act as the bastion for SSH access to EC2 instances in the private subnets.
 
-In the private subnets:
+* In the private subnets, a Linux EC2 instance (target host) in an Auto Scaling group. This target host has the Okta server agent installed and is configured to be accessible only through the Linux bastion host in the public subnet.*
 
-* In the private subnets, a Linux EC2 instance with the Okta Server Agent installed, configured to only be accessible through the Linux bastion hosts in the public subnets.
-
-**Note:** The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.
+[.small]#* The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#
