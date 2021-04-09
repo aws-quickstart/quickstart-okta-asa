@@ -5,6 +5,7 @@
 :doc-month: April
 :doc-year: 2021
 :partner-contributors: Ivan Dwyer, Frederico Hakamine, and Adam Arkon, Okta
+:aws-contributors: Roy Rodan, AWS ISV Partner Management team
 :quickstart-contributors: Dave May, AWS Quick Start team
 :deployment_time: 30 minutes
 :default_deployment_region: us-east-1
