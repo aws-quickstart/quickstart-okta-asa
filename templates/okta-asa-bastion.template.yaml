@@ -456,6 +456,11 @@ Resources:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/CloudWatchAgentServerPolicy'
   BastionHostPolicy:
     Type: 'AWS::IAM::Policy'
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - EIAMPolicyWildcardResource
     Properties:
       PolicyName: BastionPolicy
       PolicyDocument:
@@ -481,7 +486,7 @@ Resources:
           - Action:
               - 'ec2:AssociateAddress'
               - 'ec2:DescribeAddresses'
-            Resource: '*'
+            Resource: '*' # Only supported resource per the documentation
             Effect: Allow
       Roles:
         - !If
