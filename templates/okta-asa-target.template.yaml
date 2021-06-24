@@ -447,6 +447,10 @@ Resources:
         config:
           ignore_checks:
             - EIAMPolicyWildcardResource
+      cfn_nag:
+        rules_to_suppress:
+          - id: W12
+            reason: "EC2 requires wildcard access"
     Properties:
       PolicyName: TargetPolicy
       PolicyDocument:
@@ -658,6 +662,13 @@ Resources:
             [ $(qs_status) == 0 ] && cfn_success || cfn_fail
   TargetSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: F1000
+            reason: "Standard Amazon practice"
+          - id: W36
+            reason: "EC2 requires wildcard access"
     Properties:
       GroupDescription: Enables SSH Access to Target Hosts
       VpcId: !Ref VPCID

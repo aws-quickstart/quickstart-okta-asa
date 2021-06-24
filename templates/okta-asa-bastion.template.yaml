@@ -461,6 +461,10 @@ Resources:
         config:
           ignore_checks:
             - EIAMPolicyWildcardResource
+      cfn_nag:
+        rules_to_suppress:
+          - id: W12
+            reason: "EC2 requires wildcard access"
     Properties:
       PolicyName: BastionPolicy
       PolicyDocument:
@@ -707,6 +711,13 @@ Resources:
               - 'Null'
   BastionSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: F1000
+            reason: "Standard Amazon practice"
+          - id: W36
+            reason: "Group description is sufficient"
     Properties:
       GroupDescription: Enables SSH Access to Bastion Hosts
       VpcId: !Ref VPCID
