@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: This AWS CloudFormation template deploys a bastion host enrolled with Okta Advanced Server Access (qs-1rm280cl1)
 Metadata:
+  cfn-lint:
+    config:
+      ignore_checks:
+        - W9006
   LICENSE: Apache License, Version 2.0
   QuickStartDocumentation:
     EntrypointName: "Parameters for deploying Okta ASA into an existing VPC"
@@ -95,7 +99,6 @@ Metadata:
         default: Root volume size
       EnrollmentToken:
         default: Okta Advanced Server Access enrollment token
-  cfn-lint: { config: { ignore_checks: [E9007] } }
 Parameters:
   EC2AMIOS:
     AllowedValues:

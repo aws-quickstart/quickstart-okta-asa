@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: This AWS CloudFormation template deploys an environment – VPC, bastion, and target hosts – with Okta Advanced Server Access (qs-1rm280cig)
 Metadata:
+  cfn-lint:
+    config:
+      ignore_checks:
+        - W9006
   LICENSE: Apache License, Version 2.0 
   QuickStartDocumentation:
     EntrypointName: "Parameters for deploying Okta ASA into a new VPC"
@@ -92,7 +96,6 @@ Metadata:
         default: VPC CIDR
       EnrollmentToken:
         default: Okta Advanced Server Access enrollment token
-  cfn-lint: { config: { ignore_checks: [E9007] } }
 Parameters:
   AvailabilityZones:
     Description: 'Availability Zones to use for the subnets in the VPC. The logical order is preserved. This deployment uses 2 Availability Zones.'
