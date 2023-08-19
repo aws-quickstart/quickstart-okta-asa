@@ -1,6 +1,0 @@
-
-=== Launch into a new VPC
-include::okta-asa-main.adoc[]
-
-=== Launch into an existing VPC
-include::okta-asa-target.adoc[]
