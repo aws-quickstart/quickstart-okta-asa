@@ -1,0 +1,17 @@
+:partner-solution-project-name: quickstart-okta-asa
+:partner-solution-github-org: aws-quickstart
+:partner-product-name: Okta Advanced Server Access
+:partner-product-short-name: Okta ASA
+:partner-company-name: Okta
+:doc-month: August
+:doc-year: 2023
+:partner-contributors: Ivan Dwyer, Frederico Hakamine, and Adam Arkon, Okta
+// :other-contributors: Akua Mansa, Trek10
+:aws-contributors: Roy Rodan, AWS ISV Partner Management team
+:aws-ia-contributors: Dave May, AWS Integration & Automation team
+:deployment_time: 30 minutes
+:default_deployment_region: us-east-1
+// :private_repo:
+
+
+// For instructions on creating this deployment guide, refer to "Build your AWS Partner Solution documentation" (https://aws-ia-us-west-2.s3.us-west-2.amazonaws.com/docs/content/index.html#/).

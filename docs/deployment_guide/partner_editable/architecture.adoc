@@ -1,11 +1,15 @@
-Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following {partner-product-name} environment in the AWS Cloud.
-
 :xrefstyle: short
-[#architecture1]
-.Quick Start architecture for _{partner-product-name}_ on AWS
-image::../images/okta-asa-architecture_diagram.png[Architecture]
 
-As shown in <<architecture1>>, the Quick Start deploys the following:
+Deploying this Partner Solution with default parameters builds the following {partner-product-short-name} environment in the
+AWS Cloud.
+
+// Replace this example diagram with your own. Follow our wiki guidelines: https://w.amazon.com/bin/view/AWS_Quick_Starts/Process_for_PSAs/#HPrepareyourarchitecturediagram. Upload your source PowerPoint file to the GitHub {deployment name}/docs/images/ directory in its repository.
+
+[#architecture1]
+.Partner Solution architecture for {partner-product-short-name} on AWS
+image::../docs/deployment_guide/images/okta-asa-architecture_diagram.png[Architecture]
+
+As shown in <<architecture1>>, this Partner Solution sets up the following:
 
 * A highly available architecture that spans two Availability Zones.*
 * A VPC configured with public and private subnets, according to AWS best practices, to provide you with your own virtual network on AWS.*
@@ -17,4 +21,4 @@ As shown in <<architecture1>>, the Quick Start deploys the following:
 
 * In the private subnets, a Linux EC2 instance (target host) in an Auto Scaling group. This target host has the Okta server agent installed and is configured to be accessible only through the Linux bastion host in the public subnet.*
 
-[.small]#* The template that deploys the Quick Start into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#
+[.small]#* The template that deploys this Partner Solution into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#

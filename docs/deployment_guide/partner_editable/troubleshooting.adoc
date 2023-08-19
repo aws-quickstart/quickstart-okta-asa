@@ -1,0 +1,13 @@
+// Add any unique troubleshooting steps here.
+
+For troubleshooting common Partner Solution issues, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^] and https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html[Troubleshooting CloudFormation^].
+
+// == Resources
+// Uncomment section and add links to any external resources that are specified by the partner.
+
+== {partner-product-short-name} documentation
+
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/start-here.htm[Advanced Server Access Setup^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/reference.htm[Advanced Server Access Reference^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sftd.htm[Deploy an Advanced Server Access server^]
+* https://help.okta.com/en/prod/Content/Topics/Adv_Server_Access/docs/sft.htm[Install the Advanced Server Access client^]
