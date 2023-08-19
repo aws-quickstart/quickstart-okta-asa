@@ -7,22 +7,18 @@ AWS Cloud.
 
 [#architecture1]
 .Partner Solution architecture for {partner-product-short-name} on AWS
-image::../docs/deployment_guide/images/architecture_diagram.png[Architecture]
+image::../docs/deployment_guide/images/okta-asa-architecture_diagram.png[Architecture]
 
 As shown in <<architecture1>>, this Partner Solution sets up the following:
 
 * A highly available architecture that spans two Availability Zones.*
-* A virtual private cloud (VPC) configured with public and private subnets, according to AWS
-best practices, to provide you with your own virtual network on AWS.*
+* A VPC configured with public and private subnets, according to AWS best practices, to provide you with your own virtual network on AWS.*
+
 * In the public subnets:
-** Managed network address translation (NAT) gateways to allow outbound
-internet access for resources in the private subnets.*
-** A Linux bastion host in an Auto Scaling group to allow inbound Secure
-Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in public and private subnets.*
-* In the private subnets:
-** <item>.
-** <item>.
-// Add bullet points for any additional components that are included in the deployment. Ensure that the additional components are shown in the architecture diagram. End each bullet with a period.
-* <describe any additional components>.
+
+** Managed network address translation (NAT) gateways to allow outbound internet access for resources in the private subnets.*
+** A Linux bastion host in an Auto Scaling group. This host has the Okta server agent installed. It shares a configuration to act as the bastion for SSH access to EC2 instances in the private subnets.
+
+* In the private subnets, a Linux EC2 instance (target host) in an Auto Scaling group. This target host has the Okta server agent installed and is configured to be accessible only through the Linux bastion host in the public subnet.*
 
 [.small]#* The template that deploys this Partner Solution into an existing VPC skips the components marked by asterisks and prompts you for your existing VPC configuration.#

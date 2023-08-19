@@ -1,3 +1,7 @@
 // Include details about any licenses and how to sign up. Provide links as appropriate.
 
 There is no cost to use this Partner Solution, but you will be billed for any AWS services or resources that this Partner Solution deploys. For more information, refer to the https://fwd.aws/rA69w?[AWS Partner Solution General Information Guide^].
+
+This Partner Solution requires a license for https://www.okta.com/products/advanced-server-access/[{partner-product-name}^]. This product is backed by the Okta Identity Cloud for user and group management, account-lifecycle management, single sign-on, and multi-factor authentication. 
+
+To use the Partner Solution in your production environment, https://app.scaleft.com/p/signup[sign up^] for {partner-product-short-name}. Follow the instructions to create an {partner-product-short-name} tenant backed by a new or existing Okta tenant. You don't need a license file to deploy the software on the AWS Cloud.

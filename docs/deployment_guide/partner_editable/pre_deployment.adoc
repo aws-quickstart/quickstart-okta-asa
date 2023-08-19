@@ -1,3 +1,37 @@
 //Include any predeployment steps here, such as signing up for a Marketplace AMI or making any changes to a partner account. If there are no predeployment steps, leave this file empty.
 
 == Predeployment steps
+
+=== Okta account
+
+To use this Partner Solution, you must be an Okta Org administrator. If you don't already have an Okta account, https://www.okta.com/free-trial[sign up for a free trial^]. {partner-product-name} is an integrated application with an existing Okta Org. To create an {partner-product-short-name} team, visit the https://app.scaleft.com/p/signup[sign-up page^], and follow the instructions.
+
+=== Set up {partner-product-short-name}
+
+==== Sign in to your {partner-product-short-name} team
+
+Sign in to your {partner-product-short-name} team at https://app.scaleft.com with your Okta credentials. If you do not have an {partner-product-short-name} team, see link:#_planning_the_deployment[Planning the deployment] earlier in this guide for instructions on how to create a tenant. 
+
+==== Create a project
+
+Create an {partner-product-short-name} project, which represents the authorization scope for a set of EC2 instances. Users and groups are explicitly assigned to projects, where role-based access and entitlements are specified. Okta manages and provisions accounts and entitlements to the downstream EC2 instances.
+
+:xrefstyle: short
+[#deploy1]
+.Creating a project in {partner-product-name}
+[link=/docs/deployment_guide/images/asa_create_project.png]
+image::../docs/deployment_guide/images/asa_create_project.png[Creating a project in {partner-product-name}]
+
+==== Configure instance enrollment
+
+In {partner-product-short-name}, EC2 instances are enrolled with a specific project using enrollment tokens or automatic enrollment. This Partner Solution supports server enrollment using enrollment tokens.
+
+. Go to the project detail page, and choose the **Enrollment** tab.
+. Choose **Create Enrollment Token**.
+. Name your token, and choose **Submit**.
+. Copy the token value in the next screen for future reference.
+
+//=== Confirm your AWS account configuration
+
+//. Sign in to your AWS account at https://aws.amazon.com with an IAM user role that has the necessary permissions.
+//. Make sure that your AWS account is configured correctly, as discussed in the link:#_technical_requirements[Technical requirements] section.
